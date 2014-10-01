@@ -2,7 +2,7 @@
 -- documentation, see http://haskell.org/cabal/users-guide/
 
 name:                string-conversions
-version:             0.3.0.2
+version:             0.3.0.3
 synopsis:            Simplifies dealing with different types for strings
 description:         Provides a simple type class for converting values
                      of different string types
