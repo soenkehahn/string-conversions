@@ -19,6 +19,7 @@ module Data.String.Conversions (
     -- * class and conversions
     ConvertibleStrings(..),
     cs,
+    cshow,
 
     -- * type synonyms
     StrictByteString,
@@ -63,6 +64,9 @@ class ConvertibleStrings a b where
 
 cs :: ConvertibleStrings a b => a -> b
 cs = convertString
+
+cshow :: (Show a, ConvertibleStrings String b) => a -> b
+cshow = cs . show
 
 #if !MIN_VERSION_base(4,5,0)
 (<>) :: Monoid s => s -> s -> s
