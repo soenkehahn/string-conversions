@@ -38,7 +38,9 @@ module Data.String.Conversions (
 
 import Data.Monoid
 
+#if !MIN_VERSION_base(4,8,0)
 import Control.Applicative
+#endif
 
 -- string imports
 
