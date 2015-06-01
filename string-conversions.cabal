@@ -21,7 +21,8 @@ source-repository head
   location: https://github.com/soenkehahn/string-conversions.git
 
 library
-  exposed-modules:     Data.String.Conversions
+  exposed-modules:     Data.String.Conversions,
+                       Data.String.Conversions.Monomorphic
   build-depends:
     base < 5,
     bytestring >= 0.9,
