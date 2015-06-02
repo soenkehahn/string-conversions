@@ -10,7 +10,7 @@ description:         Provides a simple type class for converting values
 license:             BSD3
 license-file:        LICENSE
 author:              Sönke Hahn
-maintainer:          shahn@joyridelabs.de
+maintainer:          soenkehahn@gmail.com
 -- copyright:
 category:            Data
 build-type:          Simple
