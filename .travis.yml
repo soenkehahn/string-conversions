@@ -16,5 +16,5 @@ before_install:
   - cabal --version
 
 script:
-  - cabal configure --enable-tests --ghc-options='-Wall -Werror' && cabal build && cabal test
-  - cabal install --ghc-options='-Wall -Werror'
+  - cabal configure --enable-tests --ghc-options='-Werror' && cabal build && cabal test
+  - cabal install --ghc-options='-Werror'
