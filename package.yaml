@@ -1,0 +1,22 @@
+name: string-conversions
+version: "0.4"
+synopsis: Simplifies dealing with different types for strings
+description: Provides a simple type class for converting values
+  of different string types
+  into values of other string types.
+license: BSD3
+author: Sönke Hahn
+maintainer: soenkehahn@gmail.com
+category: Data
+
+github: soenkehahn/string-conversions
+
+library:
+  ghc-options: -Wall
+  source-dirs:
+    - .
+  dependencies:
+    - base == 4.*
+    - bytestring >= 0.9
+    - text >= 0.11
+    - utf8-string >= 0.3
