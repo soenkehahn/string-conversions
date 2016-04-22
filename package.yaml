@@ -14,7 +14,7 @@ github: soenkehahn/string-conversions
 library:
   ghc-options: -Wall
   source-dirs:
-    - .
+    - src
   dependencies:
     - base == 4.*
     - bytestring >= 0.9
