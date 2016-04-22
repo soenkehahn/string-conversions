@@ -33,3 +33,24 @@ library
     Data.String.Conversions
     Data.String.Conversions.Monomorphic
   ghc-options: -Wall
+
+test-suite spec
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  hs-source-dirs:
+    test,
+    src
+  build-depends:
+    base == 4.*,
+    bytestring >= 0.9,
+    text >= 0.11,
+    utf8-string >= 0.3,
+    hspec,
+    quickcheck-instances,
+    deepseq,
+    QuickCheck
+  other-modules:
+    Data.String.ConversionsSpec
+    Data.String.Conversions
+    Data.String.Conversions.Monomorphic
+  default-language: Haskell2010
