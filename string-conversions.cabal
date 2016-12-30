@@ -3,7 +3,7 @@
 -- see: https://github.com/sol/hpack
 
 name:                string-conversions
-version:             0.4
+version:             0.4.0.1
 synopsis:            Simplifies dealing with different types for strings
 description:         Provides a simple type class for converting values of different string types into values of other string types.
 license:             BSD3
