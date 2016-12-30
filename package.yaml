@@ -11,6 +11,12 @@ category: Data
 
 github: soenkehahn/string-conversions
 
+tested-with:
+  GHC == 7.6.3,
+  GHC == 7.8.4,
+  GHC == 7.10.1,
+  GHC == 8.0.1
+
 dependencies:
   - base == 4.*
   - bytestring >= 0.9

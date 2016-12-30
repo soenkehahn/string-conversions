@@ -1,5 +1,3 @@
-{-# LANGUAGE ViewPatterns #-}
-
 module Data.String.ConversionsSpec where
 
 import           Control.DeepSeq
