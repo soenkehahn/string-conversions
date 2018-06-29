@@ -140,7 +140,7 @@ instance ConvertibleStrings LazyByteString StrictByteString where
 
 instance ConvertibleStrings LazyByteString StrictText where
     convertString =
-        Data.Text.Encoding.decodeUtf8With  Data.Text.Encoding.Error.lenientDecode .
+        Data.Text.Encoding.decodeUtf8With Data.Text.Encoding.Error.lenientDecode .
         mconcat . Data.ByteString.Lazy.toChunks
 
 instance ConvertibleStrings LazyByteString LazyText where
