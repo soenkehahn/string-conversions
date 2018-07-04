@@ -1,4 +1,4 @@
-language: haskell
+language: generic
 
 env:
   - GHCVER=7.6.3  CABALVER=1.22
@@ -15,7 +15,9 @@ before_install:
   - export PATH=/opt/cabal/$CABALVER/bin:$PATH
   - ghc --version
   - cabal --version
+  - cabal update
 
 script:
+  - cabal install --only-dependencies --enable-tests
   - cabal configure --enable-tests --ghc-options='-Werror' && cabal build && cabal test
   - cabal install --ghc-options='-Werror'
