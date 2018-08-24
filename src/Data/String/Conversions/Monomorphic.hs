@@ -18,6 +18,7 @@ module Data.String.Conversions.Monomorphic (
     toST,
     toLazyText,
     toLT,
+    toShortBS,
 
     -- * From a monomorphic input to a polymorphic output
 
@@ -29,7 +30,8 @@ module Data.String.Conversions.Monomorphic (
     fromStrictText,
     fromST,
     fromLazyText,
-    fromLT
+    fromLT,
+    fromShortBS
   ) where
 
 import Prelude (String)
@@ -65,6 +67,9 @@ toLazyText = cs
 toLT :: ConvertibleStrings a LT => a -> LT
 toLT = cs
 
+toShortBS :: ConvertibleStrings a ShortBS => a -> ShortBS
+toShortBS = cs
+
 -- from a monomorphic type
 
 fromString :: ConvertibleStrings String a => String -> a
@@ -93,3 +98,6 @@ fromLazyText = cs
 
 fromLT :: ConvertibleStrings LT a => LT -> a
 fromLT = cs
+
+fromShortBS :: ConvertibleStrings ShortBS a => ShortBS -> a
+fromShortBS = cs
