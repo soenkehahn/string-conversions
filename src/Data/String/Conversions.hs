@@ -31,6 +31,7 @@ module Data.String.Conversions (
     ST,
     LazyText,
     LT,
+    ShortBS,
 
     -- | Generic string concatenation (with ghc >= 7.4 this is a re-export from Data.Monoid
     -- to avoid clashes.)
