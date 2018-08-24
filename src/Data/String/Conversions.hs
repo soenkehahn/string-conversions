@@ -112,7 +112,7 @@ instance ConvertibleStrings String LazyText where
     convertString = Data.Text.Lazy.pack
 
 instance ConvertibleStrings String ShortBS where
-    convertString = Data.ByteString.UTF8.fromString . Data.ByteString.Short.toShort
+    convertString = Data.ByteString.Short.toShort . Data.ByteString.UTF8.fromString 
 
 -- from StrictByteString
 
