@@ -13,6 +13,8 @@
 --
 --     * lazy 'Data.Text.Lazy.Text'
 --
+--     * 'Data.ByteString.Short.ShortByteString`
+--
 -- Assumes UTF-8 encoding for both types of ByteStrings.
 
 module Data.String.Conversions (
@@ -46,6 +48,8 @@ import Control.Applicative
 
 import qualified Data.ByteString
 import qualified Data.ByteString.UTF8
+
+import qualified Data.ByteString.Short
 
 import qualified Data.ByteString.Lazy
 import qualified Data.ByteString.Lazy.UTF8
@@ -85,6 +89,7 @@ type ST         = Data.Text.Text
 type LazyText = Data.Text.Lazy.Text
 type LT       = Data.Text.Lazy.Text
 
+type ShortBS  = Data.ByteString.Short.ShortByteString 
 
 -- instances
 -- ---------
@@ -106,6 +111,8 @@ instance ConvertibleStrings String StrictText where
 instance ConvertibleStrings String LazyText where
     convertString = Data.Text.Lazy.pack
 
+instance ConvertibleStrings String ShortBS where
+    convertString = Data.ByteString.UTF8.fromString . Data.ByteString.Short.toShort
 
 -- from StrictByteString
 
@@ -126,6 +133,8 @@ instance ConvertibleStrings StrictByteString LazyText where
         Data.Text.Lazy.Encoding.decodeUtf8With Data.Text.Encoding.Error.lenientDecode .
         Data.ByteString.Lazy.fromChunks . pure
 
+instance ConvertibleStrings StrictByteString ShortBS where
+    convertString = Data.ByteString.Short.toShort
 
 -- from LazyByteString
 
@@ -146,6 +155,8 @@ instance ConvertibleStrings LazyByteString StrictText where
 instance ConvertibleStrings LazyByteString LazyText where
     convertString = Data.Text.Lazy.Encoding.decodeUtf8With Data.Text.Encoding.Error.lenientDecode
 
+instance ConvertibleStrings LazyByteString ShortBS where
+    convertString = Data.ByteString.Short.toShort . mconcat . Data.ByteString.Lazy.toChunks
 
 -- from StrictText
 
@@ -164,6 +175,8 @@ instance ConvertibleStrings StrictText LazyByteString where
 instance ConvertibleStrings StrictText LazyText where
     convertString = Data.Text.Lazy.fromChunks . pure
 
+instance ConvertibleStrings StrictText ShortBS where
+    convertString = Data.ByteString.Short.toShort . Data.Text.Encoding.encodeUtf8
 
 -- from LazyText
 
@@ -182,3 +195,31 @@ instance ConvertibleStrings LazyText LazyByteString where
 
 instance ConvertibleStrings LazyText StrictText where
     convertString = mconcat . Data.Text.Lazy.toChunks
+
+instance ConvertibleStrings LazyText ShortBS where
+    convertString = Data.ByteString.Short.toShort .
+        mconcat . Data.ByteString.Lazy.toChunks . Data.Text.Lazy.Encoding.encodeUtf8
+
+-- from ShortBS
+
+instance ConvertibleStrings ShortBS ShortBS where
+    convertString = id
+
+instance ConvertibleStrings ShortBS StrictByteString where
+    convertString = Data.ByteString.Short.fromShort
+
+instance ConvertibleStrings ShortBS String where
+    convertString = Data.ByteString.UTF8.toString . Data.ByteString.Short.fromShort
+
+instance ConvertibleStrings ShortBS LazyByteString where
+    convertString = Data.ByteString.Lazy.fromChunks . pure . Data.ByteString.Short.fromShort
+
+instance ConvertibleStrings ShortBS StrictText where
+    convertString = 
+        Data.Text.Encoding.decodeUtf8With Data.Text.Encoding.Error.lenientDecode . 
+        Data.ByteString.Short.fromShort
+
+instance ConvertibleStrings ShortBS LazyText where
+    convertString =
+        Data.Text.Lazy.Encoding.decodeUtf8With Data.Text.Encoding.Error.lenientDecode .
+        Data.ByteString.Lazy.fromChunks . pure . Data.ByteString.Short.fromShort
