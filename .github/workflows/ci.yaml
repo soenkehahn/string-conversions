@@ -41,7 +41,7 @@ jobs:
         run: stack build --test --only-dependencies --haddock-deps
 
       - name: Test
-        run: stack test --ghc-options=-Werror
+        run: stack test -Wall
 
       - name: Docs
         run: stack haddock
