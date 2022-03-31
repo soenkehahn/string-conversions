@@ -1,4 +1,4 @@
-name: Ci
+name: Stack-CI
 
 on:
   push:
