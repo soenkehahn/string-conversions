@@ -162,6 +162,8 @@ jobs:
           touch cabal.project.local
           echo "packages: ${PKGDIR_string_conversions}" >> cabal.project
           cat >> cabal.project <<EOF
+          package string-conversions
+            ghc-options: -Wall
           EOF
           $HCPKG list --simple-output --names-only | perl -ne 'for (split /\s+/) { print "constraints: $_ installed\n" unless /^(string-conversions)$/; }' >> cabal.project.local
           cat cabal.project
