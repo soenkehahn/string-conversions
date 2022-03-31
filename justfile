@@ -1,4 +1,4 @@
-ci:
+stack-ci:
   #!/usr/bin/env bash
   set -eux
 
