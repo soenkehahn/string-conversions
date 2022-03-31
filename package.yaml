@@ -39,3 +39,4 @@ tests:
       - quickcheck-instances
       - deepseq
       - QuickCheck
+    build-tools: hspec-discover
