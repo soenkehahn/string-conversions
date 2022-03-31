@@ -5,5 +5,5 @@ ci:
   for STACK_YAML in stack*yaml ; do
     export STACK_YAML
     echo testing $STACK_YAML
-    stack test
+    stack test --ghc-options=-Wall
   done
