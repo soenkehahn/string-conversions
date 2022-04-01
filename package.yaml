@@ -39,3 +39,14 @@ tests:
       - quickcheck-instances
       - deepseq
       - QuickCheck
+
+
+benchmarks:
+  bench:
+    main: Bench.hs
+    source-dirs:
+      - bench
+    dependencies:
+      - criterion
+      - string-conversions
+      - QuickCheck
