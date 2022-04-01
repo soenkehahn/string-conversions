@@ -14,6 +14,8 @@ module Data.String.Conversions.Monomorphic (
     toSBS,
     toLazyByteString,
     toLBS,
+    toByteStringBuilder,
+    toBSB,
     toStrictText,
     toST,
     toLazyText,
@@ -26,6 +28,8 @@ module Data.String.Conversions.Monomorphic (
     fromSBS,
     fromLazyByteString,
     fromLBS,
+    fromByteStringBuilder,
+    fromBSB,
     fromStrictText,
     fromST,
     fromLazyText,
@@ -52,6 +56,12 @@ toLazyByteString = cs
 
 toLBS :: ConvertibleStrings a LBS => a -> LBS
 toLBS = cs
+
+toByteStringBuilder :: ConvertibleStrings a ByteStringBuilder => a -> ByteStringBuilder
+toByteStringBuilder = cs
+
+toBSB :: ConvertibleStrings a BSB => a -> BSB
+toBSB = cs
 
 toStrictText :: ConvertibleStrings a StrictText => a -> StrictText
 toStrictText = cs
@@ -81,6 +91,12 @@ fromLazyByteString = cs
 
 fromLBS :: ConvertibleStrings LBS a => LBS -> a
 fromLBS = cs
+
+fromByteStringBuilder :: ConvertibleStrings ByteStringBuilder a => ByteStringBuilder -> a
+fromByteStringBuilder = cs
+
+fromBSB :: ConvertibleStrings BSB a => BSB -> a
+fromBSB = cs
 
 fromStrictText :: ConvertibleStrings StrictText a => StrictText -> a
 fromStrictText = cs

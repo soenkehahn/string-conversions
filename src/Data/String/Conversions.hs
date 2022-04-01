@@ -9,6 +9,8 @@
 --
 --     * lazy 'Data.ByteString.Lazy.ByteString'
 --
+--     * bytestring 'Data.ByteString.Builder.Builder'
+--
 --     * strict 'Data.Text.Text'
 --
 --     * lazy 'Data.Text.Lazy.Text'
@@ -25,6 +27,8 @@ module Data.String.Conversions (
     SBS,
     LazyByteString,
     LBS,
+    ByteStringBuilder,
+    BSB,
     StrictText,
     ST,
     LazyText,
@@ -49,6 +53,8 @@ import qualified Data.ByteString.UTF8
 
 import qualified Data.ByteString.Lazy
 import qualified Data.ByteString.Lazy.UTF8
+
+import qualified Data.ByteString.Builder
 
 import qualified Data.Text
 import qualified Data.Text.Encoding hiding (decodeUtf8)
@@ -79,6 +85,9 @@ type SBS              = Data.ByteString.ByteString
 type LazyByteString = Data.ByteString.Lazy.ByteString
 type LBS            = Data.ByteString.Lazy.ByteString
 
+type ByteStringBuilder = Data.ByteString.Builder.Builder
+type BSB               = Data.ByteString.Builder.Builder
+
 type StrictText = Data.Text.Text
 type ST         = Data.Text.Text
 
@@ -100,6 +109,9 @@ instance ConvertibleStrings String StrictByteString where
 instance ConvertibleStrings String LazyByteString where
     convertString = Data.ByteString.Lazy.UTF8.fromString
 
+instance ConvertibleStrings String ByteStringBuilder where
+    convertString = Data.ByteString.Builder.stringUtf8
+
 instance ConvertibleStrings String StrictText where
     convertString = Data.Text.pack
 
@@ -117,6 +129,9 @@ instance ConvertibleStrings StrictByteString String where
 
 instance ConvertibleStrings StrictByteString LazyByteString where
     convertString = Data.ByteString.Lazy.fromChunks . pure
+
+instance ConvertibleStrings StrictByteString ByteStringBuilder where
+    convertString = Data.ByteString.Builder.byteString
 
 instance ConvertibleStrings StrictByteString StrictText where
     convertString = Data.Text.Encoding.decodeUtf8With Data.Text.Encoding.Error.lenientDecode
@@ -137,6 +152,9 @@ instance ConvertibleStrings LazyByteString String where
 
 instance ConvertibleStrings LazyByteString StrictByteString where
     convertString = mconcat . Data.ByteString.Lazy.toChunks
+
+instance ConvertibleStrings LazyByteString ByteStringBuilder where
+    convertString = Data.ByteString.Builder.lazyByteString
 
 instance ConvertibleStrings LazyByteString StrictText where
     convertString =
@@ -161,6 +179,13 @@ instance ConvertibleStrings StrictText StrictByteString where
 instance ConvertibleStrings StrictText LazyByteString where
     convertString = Data.ByteString.Lazy.fromChunks . pure . Data.Text.Encoding.encodeUtf8
 
+instance ConvertibleStrings StrictText ByteStringBuilder where
+#if MIN_VERSION_text(1,1,0)
+    convertString = Data.Text.Encoding.encodeUtf8Builder
+#else
+    convertString = Data.ByteString.Builder.byteString . Data.Text.Encoding.encodeUtf8
+#endif
+
 instance ConvertibleStrings StrictText LazyText where
     convertString = Data.Text.Lazy.fromChunks . pure
 
@@ -180,5 +205,42 @@ instance ConvertibleStrings LazyText StrictByteString where
 instance ConvertibleStrings LazyText LazyByteString where
     convertString = Data.Text.Lazy.Encoding.encodeUtf8
 
+instance ConvertibleStrings LazyText ByteStringBuilder where
+#if MIN_VERSION_text(1,1,0)
+    convertString = Data.Text.Lazy.Encoding.encodeUtf8Builder
+#else
+    convertString = Data.ByteString.Builder.lazyByteString . Data.Text.Lazy.Encoding.encodeUtf8
+#endif
+
 instance ConvertibleStrings LazyText StrictText where
     convertString = mconcat . Data.Text.Lazy.toChunks
+
+
+-- from ByteStringBuilder
+
+instance ConvertibleStrings ByteStringBuilder ByteStringBuilder where
+    convertString = id
+
+instance ConvertibleStrings ByteStringBuilder String where
+    convertString =
+      Data.ByteString.Lazy.UTF8.toString .
+      Data.ByteString.Builder.toLazyByteString
+
+instance ConvertibleStrings ByteStringBuilder StrictByteString where
+    convertString =
+        mconcat . Data.ByteString.Lazy.toChunks .
+        Data.ByteString.Builder.toLazyByteString
+
+instance ConvertibleStrings ByteStringBuilder LazyByteString where
+    convertString = Data.ByteString.Builder.toLazyByteString
+
+instance ConvertibleStrings ByteStringBuilder StrictText where
+    convertString =
+        Data.Text.Encoding.decodeUtf8With Data.Text.Encoding.Error.lenientDecode .
+        mconcat . Data.ByteString.Lazy.toChunks .
+        Data.ByteString.Builder.toLazyByteString
+
+instance ConvertibleStrings ByteStringBuilder LazyText where
+    convertString =
+        Data.Text.Lazy.Encoding.decodeUtf8With Data.Text.Encoding.Error.lenientDecode .
+        Data.ByteString.Builder.toLazyByteString
