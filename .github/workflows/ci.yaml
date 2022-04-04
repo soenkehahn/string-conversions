@@ -23,6 +23,7 @@ jobs:
           - stack-ghc-8.10.yaml
           - stack-ghc-9.0.yaml
           - stack-ghc-9.2.yaml
+          - stack-text-2.0.yaml
     steps:
       - name: Set STACK_YAML
         run: echo STACK_YAML=${{ matrix.stack_yaml }} >> $GITHUB_ENV
