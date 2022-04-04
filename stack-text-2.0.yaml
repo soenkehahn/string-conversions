@@ -1,0 +1,6 @@
+resolver: nightly-2022-03-31
+extra-deps:
+  - text-2.0
+
+packages:
+  - .
