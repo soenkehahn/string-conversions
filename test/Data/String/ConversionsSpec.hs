@@ -12,93 +12,94 @@ import           Data.String.Conversions.Monomorphic
 spec :: Spec
 spec = do
   describe "cs" $ do
-    context "identity" $ do
-      it "correct for String" $ do
+    context "is identity for" $ do
+      it "String" $ do
         property $ \(s :: String) ->
           s `shouldBe` toString s
 
-      it "correct for StrictText" $ do
+      it "StrictText" $ do
         property $ \(s :: StrictText) ->
           s `shouldBe` toStrictText s
 
-      it "correct for LazyText" $ do
+      it "LazyText" $ do
         property $ \(s :: LazyText) ->
           s `shouldBe` toLazyText s
 
-      it "correct for StrictByteString" $ do
+      it "StrictByteString" $ do
         property $ \(s :: StrictByteString) ->
           s `shouldBe` toStrictByteString s
 
-      it "correct for LazyByteString" $ do
+      it "LazyByteString" $ do
         property $ \(s :: LazyByteString) ->
           s `shouldBe` toLazyByteString s
 
-    context "round trip" $ do
-      context "String" $ do
-        it "correct for String -> StrictText -> String" $ do
+    context "round-trips" $ do
+      context "from String" $ do
+        it "via StrictText" $ do
           roundTripTest toStrictText toString
 
-        it "correct for String -> LazyText -> String" $ do
+        it "via LazyText" $ do
           roundTripTest toLazyText toString
 
-        it "correct for String -> StrictByteString -> String" $ do
+        it "via StrictByteString" $ do
           roundTripTest toStrictByteString toString
 
-        it "correct for String -> LazyByteString -> String" $ do
+        it "via LazyByteString" $ do
           roundTripTest toLazyByteString toString
 
-      context "StrictText" $ do
-        it "correct for StrictText -> String -> StrictText" $ do
+      context "from StrictText" $ do
+        it "via String" $ do
           roundTripTest toString toStrictText
 
-        it "correct for StrictText -> LazyText -> StrictText" $ do
+        it "via LazyText" $ do
           roundTripTest toLazyText toStrictText
 
-        it "correct for StrictText -> StrictByteString -> StrictText" $ do
+        it "via StrictByteString" $ do
           roundTripTest toStrictByteString toStrictText
 
-        it "correct for StrictText -> LazyByteString -> StrictText" $ do
+        it "via LazyByteString" $ do
           roundTripTest toLazyByteString toStrictText
 
-      context "LazyText" $ do
-        it "correct for LazyText -> String -> LazyText" $ do
+      context "from LazyText" $ do
+        it "via String" $ do
           roundTripTest toString toLazyText
 
-        it "correct for LazyText -> StrictText -> LazyText" $ do
+        it "via StrictText" $ do
           roundTripTest toStrictText toLazyText
 
-        it "correct for LazyText -> StrictByteString -> LazyText" $ do
+        it "via StrictByteString" $ do
           roundTripTest toStrictByteString toLazyText
 
-        it "correct for LazyText -> LazyByteString -> LazyText" $ do
+        it "via LazyByteString" $ do
           roundTripTest toLazyByteString toLazyText
 
-      context "byte strings" $ do
-        it "correct for StrictByteString -> LazyByteString -> StrictByteString" $ do
+      context "from StrictByteString" $ do
+        it "via LazyByteString" $ do
           roundTripTest toLazyByteString toStrictByteString
 
-        it "correct for LazyByteString -> StrictByteString -> LazyByteString" $ do
+      context "from LazyByteString" $ do
+        it "via StrictByteString" $ do
           roundTripTest toStrictByteString toLazyByteString
 
-    context "unsafe byte sequence to unicode conversion" $ do
-      context "StrictByteString" $ do
-        it "completes for StrictByteString -> String" $ do
+    context "doesn't crash when converting (possibly invalid) byte sequences to unicode" $ do
+      context "from StrictByteString" $ do
+        it "to String" $ do
           smokeTest (cs :: StrictByteString -> String)
 
-        it "completes for StrictByteString -> StrictText" $ do
+        it "to StrictText" $ do
           smokeTest (cs :: StrictByteString -> StrictText)
 
-        it "completes for StrictByteString -> LazyText" $ do
+        it "to LazyText" $ do
           smokeTest (cs :: StrictByteString -> LazyText)
 
-      context "LazyByteString" $ do
-        it "completes for LazyByteString -> String" $ do
+      context "from LazyByteString" $ do
+        it "to String" $ do
           smokeTest (cs :: LazyByteString -> String)
 
-        it "completes for LazyByteString -> StrictText" $ do
+        it "to StrictText" $ do
           smokeTest (cs :: LazyByteString -> StrictText)
 
-        it "completes for LazyByteString -> LazyText" $ do
+        it "to LazyText" $ do
           smokeTest (cs :: LazyByteString -> LazyText)
 
 
